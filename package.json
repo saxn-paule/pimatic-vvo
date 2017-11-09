@@ -1,0 +1,25 @@
+{ "name": "pimatic-vvo",
+  "description": "VVO plugin",
+  "author": "Paul Schmidt",
+  "main": "vvo",
+  "files": [
+    "vvo.coffee",
+    "README.md",
+    "vvo-config-schema.coffee"
+  ],
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/saxn-paule/pimatic-vvo.git"
+  },
+  "configSchema": "vvo-config-schema.coffee",
+  "dependencies": {
+  },
+  "peerDependencies": {
+    "pimatic": "0.8.*"
+  },
+  "engines": {
+    "node": ">0.8.x",
+    "npm": ">1.1.x"
+  }
+}
