@@ -5,7 +5,8 @@
   "files": [
     "vvo.coffee",
     "README.md",
-    "vvo-config-schema.coffee"
+    "vvo-config-schema.coffee",
+    "app"
   ],
   "version": "0.0.1",
   "repository": {
