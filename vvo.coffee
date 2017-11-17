@@ -72,8 +72,6 @@ module.exports = (env) ->
       @emit 'schedule', value
 
     reLoadSchedule: ->
-      env.logger.info "reloading"
-
       now = new Date();
       time = now;
       if @offset is 'undefined' && @offset isnt 0
@@ -81,9 +79,7 @@ module.exports = (env) ->
 
       url = api + "&stopid=" + @stopid + "&limit=" + @amount + "&time=" + time.toISOString()
 
-      ###
-
-      Request.get url, (error, response, body) ->
+      Request.get url, (error, response, body) =>
         if error
           throw error
         data = JSON.parse(body)
@@ -104,9 +100,7 @@ module.exports = (env) ->
 
           env.logger.info "setting new schedule"
 
-          #@setSchedule(placeholderContent)
-
-      ###
+          @setSchedule(placeholderContent)
 
     actions:
       loadSchedule:
