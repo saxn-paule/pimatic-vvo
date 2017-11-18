@@ -4,15 +4,17 @@ $(document).on( "templateinit", (event) ->
 		constructor: (templData, @device) ->
 			@id = @device.id
 			super(templData,@device)
-			
-			@getAttribute('schedule').value.subscribe( (newval) =>
-				console.log("got new schedule")
-				$("#placeholder").html(newval)
-			)
+
 
 
 		afterRender: (elements) ->
 			super(elements)
+
+			@getAttribute('schedule').value.subscribe( (newval) =>
+			  console.log("got new schedule")
+			  $("#placeholder").html(newval)
+			)
+
 			return
 			
 	# register the item-class
