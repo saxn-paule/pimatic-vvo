@@ -5,14 +5,12 @@ $(document).on( "templateinit", (event) ->
 			@id = @device.id
 			super(templData,@device)
 
-
-
 		afterRender: (elements) ->
 			super(elements)
 
 			@getAttribute('schedule').value.subscribe( (newval) =>
-			  console.log("got new schedule")
-			  $("#placeholder").html(newval)
+				console.log("got new schedule")
+				$("#placeholder").html(newval)
 			)
 
 			return
