@@ -31,6 +31,8 @@ module.exports = (env) ->
         return
 
   class VvoDevice extends env.devices.Device
+    template: 'vvo'
+
     constructor: (@config, @plugin) ->
       @id = @config.id
       @name = @config.name
