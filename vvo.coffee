@@ -3,6 +3,7 @@ module.exports = (env) ->
   Promise = env.require 'bluebird'
   assert = env.require 'cassert'
   M = env.matcher
+  t = env.require('decl-api').types
   Request = require 'request'
   api = "https://webapi.vvo-online.de/dm?format=json";
 
@@ -32,6 +33,11 @@ module.exports = (env) ->
 
   class VvoDevice extends env.devices.Device
     template: 'vvo'
+
+    attributes:
+      schedule:
+        description: 'the schedule data'
+        type: t.string
 
     constructor: (@config, @plugin) ->
       @id = @config.id
