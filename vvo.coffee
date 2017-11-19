@@ -8,7 +8,7 @@ module.exports = (env) ->
   api = "https://webapi.vvo-online.de/dm?format=json";
 
   #mockJson = {"Name":"Merianplatz","Status":{"Code":"Ok"},"Place":"Dresden","ExpirationTime":"\/Date(1510265515463+0100)\/","Departures":[{"Id":"70729498","LineName":"7","Direction":"Pennrich","Platform":{"Name":"2","Type":"Platform"},"Mot":"Tram","RealTime":"\/Date(1510266000000+0100)\/","ScheduledTime":"\/Date(1510266000000+0100)\/","State":"InTime","RouteChanges":[],"Diva":{"Number":"11007","Network":"voe"}},{"Id":"70731143","LineName":"44","Direction":"Gorbitz","Platform":{"Name":"2","Type":"Platform"},"Mot":"Tram","RealTime":"\/Date(1510266010000+0100)\/","ScheduledTime":"\/Date(1510265940000+0100)\/","State":"Delayed","RouteChanges":["510972","511363"],"Diva":{"Number":"11044","Network":"voe"}},{"Id":"70728574","LineName":"2","Direction":"Kleinzschachwitz","Platform":{"Name":"1","Type":"Platform"},"Mot":"Tram","RealTime":"\/Date(1510266300000+0100)\/","ScheduledTime":"\/Date(1510266300000+0100)\/","State":"InTime","RouteChanges":["511363"],"Diva":{"Number":"11002","Network":"voe"}},{"Id":"70728464","LineName":"2","Direction":"Gorbitz","Platform":{"Name":"2","Type":"Platform"},"Mot":"Tram","RealTime":"\/Date(1510266660000+0100)\/","ScheduledTime":"\/Date(1510266660000+0100)\/","State":"InTime","RouteChanges":["511363"],"Diva":{"Number":"11002","Network":"voe"}},{"Id":"70729626","LineName":"7","Direction":"Weixdorf","Platform":{"Name":"1","Type":"Platform"},"Mot":"Tram","RealTime":"\/Date(1510267260000+0100)\/","ScheduledTime":"\/Date(1510267260000+0100)\/","State":"InTime","RouteChanges":[],"Diva":{"Number":"11007","Network":"voe"}},{"Id":"70730165","LineName":"10","Direction":"Gorbitz","Platform":{"Name":"2","Type":"Platform"},"Mot":"Tram","RealTime":"\/Date(1510267336000+0100)\/","ScheduledTime":"\/Date(1510267260000+0100)\/","State":"Delayed","RouteChanges":["510972","511363"],"Diva":{"Number":"11010","Network":"voe"}}]}
-  mockhtml = '<div class="dvb"><div class="stop">Merianplatz</div><div class="clear"/>  <div class="head">  <div class="line caption col-1">Linie</div>			<div class="target caption col-2">Ziel</div>  <div class="minutes caption col-3">Min.</div>		</div>  <div class="clear"/>  <div class="col-1">2</div>		<div class="col-2">Kleinzschachwitz</div>  <div class="col-3">5</div>		<div class="clear"/>  <div class="col-1">7</div>		<div class="col-2">Pennrich</div>  <div class="col-3">9</div>		<div class="clear"/>  <div class="col-1">2</div>		<div class="col-2">Gorbitz</div>  <div class="col-3">13</div>		<div class="clear"/>  <div class="col-1">1</div>		<div class="col-2">Gorbitz</div>  <div class="col-3">14</div>		<div class="clear"/>  <div class="col-1">7</div>		<div class="col-2">Weixdorf</div>  <div class="col-3">21</div>		<div class="clear"/>  <div class="col-1">11</div>		<div class="col-2">Gorbitz</div>  <div class="col-3">22</div>		<div class="clear"/></div>'
+  #mockhtml = '<div class="dvb"><div class="stop">Merianplatz</div><div class="clear"/>  <div class="head">  <div class="line caption col-1">Linie</div>			<div class="target caption col-2">Ziel</div>  <div class="minutes caption col-3">Min.</div>		</div>  <div class="clear"/>  <div class="col-1">2</div>		<div class="col-2">Kleinzschachwitz</div>  <div class="col-3">5</div>		<div class="clear"/>  <div class="col-1">7</div>		<div class="col-2">Pennrich</div>  <div class="col-3">9</div>		<div class="clear"/>  <div class="col-1">2</div>		<div class="col-2">Gorbitz</div>  <div class="col-3">13</div>		<div class="clear"/>  <div class="col-1">1</div>		<div class="col-2">Gorbitz</div>  <div class="col-3">14</div>		<div class="clear"/>  <div class="col-1">7</div>		<div class="col-2">Weixdorf</div>  <div class="col-3">21</div>		<div class="clear"/>  <div class="col-1">11</div>		<div class="col-2">Gorbitz</div>  <div class="col-3">22</div>		<div class="clear"/></div>'
 
   class VvoPlugin extends env.plugins.Plugin
 
@@ -45,13 +45,11 @@ module.exports = (env) ->
       @stopid = @config.stopid
       @amount = @config.amount or "5"
       @offset = @config.offset or "0"
-      @schedule = mockhtml
-
-      env.logger.info "StopId: " + @stopid
+      @schedule = ""
 
       setInterval ( =>
         @reLoadSchedule()
-      ), 15000
+      ), 30000
 
       super()
 
@@ -81,11 +79,19 @@ module.exports = (env) ->
 
     reLoadSchedule: ->
       now = new Date();
-      time = now;
-      if @offset is 'undefined' && @offset isnt 0
-        time = new Date(now.getTime() + (@offset * 60 * 1000))
 
-      url = api + "&stopid=" + @stopid + "&limit=" + @amount + "&time=" + time.toISOString()
+      if @offset is 'undefined'
+        @offset = 0
+
+      datetime = new Date(now.getTime() + (@offset * 60 * 1000))
+
+      day = datetime.getDate() + 1
+      month = datetime.getMonth() + 1
+      year = datetime.getFullYear()
+
+      count = 1 + Number.parseInt(@amount)
+
+      url = api + "&stopid=" + @stopid + "&limit=" + count + "&date=" + day + "." + month + "." + year + "&time=" + datetime.getHours()+ ":" +datetime.getMinutes()
 
       Request.get url, (error, response, body) =>
         if error
@@ -105,8 +111,6 @@ module.exports = (env) ->
             placeholderContent = placeholderContent + row
 
           placeholderContent = placeholderContent + "</div>"
-
-          env.logger.info "setting new schedule"
 
           @setSchedule(placeholderContent)
 

@@ -9,8 +9,7 @@ $(document).on( "templateinit", (event) ->
 			super(elements)
 
 			@getAttribute('schedule').value.subscribe( (newval) =>
-				console.log("got new schedule")
-				$("#placeholder").html(newval)
+				$("#"+@id+"_vvo_placeholder").html(newval)
 			)
 
 			return
