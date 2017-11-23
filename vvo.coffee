@@ -47,6 +47,8 @@ module.exports = (env) ->
       @offset = @config.offset or "0"
       @schedule = ""
 
+      @reLoadSchedule()
+
       @timerId = setInterval ( =>
         @reLoadSchedule()
       ), 30000

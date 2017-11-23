@@ -8,9 +8,12 @@ $(document).on( "templateinit", (event) ->
 		afterRender: (elements) ->
 			super(elements)
 
-			@getAttribute('schedule').value.subscribe( (newval) =>
+			renderSchedule = (newval) =>
 				$("#"+@id+"_vvo_placeholder").html(newval)
-			)
+
+			renderSchedule(@getAttribute('schedule').value())
+
+			@getAttribute('schedule').value.subscribe(renderSchedule)
 
 			return
 			
