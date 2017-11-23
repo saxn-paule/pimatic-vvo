@@ -47,10 +47,16 @@ module.exports = (env) ->
       @offset = @config.offset or "0"
       @schedule = ""
 
-      setInterval ( =>
+      @timerId = setInterval ( =>
         @reLoadSchedule()
       ), 30000
 
+      super()
+
+    destroy: () ->
+      if @timerId?
+        clearInterval @timerId
+        @timerId = null
       super()
 
     getStopid: -> Promise.resolve(@stopid)
