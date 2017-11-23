@@ -1,7 +1,7 @@
 <script id="vvo-template" type="text/template">
     <li data-bind="attr: { id: id }" class="sortable no-header">
         <div>
-            <label class="device-label" data-bind="text: name" />
+            <label class="device-label" data-bind="text: name, tooltip: $data.labelTooltipHtml" />
         </div>
 
         <div data-bind="attr: { id: id + '_vvo_placeholder'}">&nbsp;</div>
