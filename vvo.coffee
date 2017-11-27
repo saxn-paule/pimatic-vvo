@@ -115,7 +115,7 @@ module.exports = (env) ->
             hit = departures[i]
             arrivalTime = new Date(parseInt(if hit.RealTime then hit.RealTime.match(/\d+/)[0] else hit.ScheduledTime.match(/\d+/)[0]))
             arrivalTimeRelative = Math.round((arrivalTime - now) / 1000 / 60)
-            row = "<div class=\"col-1\">" + hit.LineName + "</div><div class=\"col-2\">" + hit.Direction + "</div><div class=\"col-3\">" + arrivalTimeRelative + "</div><div class=\"clear\"></div>"
+            row = "<div class='row'><div class=\"col-1\">" + hit.LineName + "</div><div class=\"col-2\">" + hit.Direction + "</div><div class=\"col-3\">" + arrivalTimeRelative + "</div></div><div class=\"clear\"></div>"
             placeholderContent = placeholderContent + row
 
           placeholderContent = placeholderContent + "</div>"
@@ -147,8 +147,6 @@ module.exports = (env) ->
         return Promise.resolve(__("Auftrag ausgeführt"))
 
 
-
-
   ####### ACTION PROVIDER #######
   class VvoActionProvider extends env.actions.ActionProvider
     constructor: (@framework)->
@@ -172,6 +170,7 @@ module.exports = (env) ->
           nextInput: input.substring(match.length)
           actionHandler: new VvoActionHandler(@framework)
         }
+
 
   vvoPlugin = new VvoPlugin
   return vvoPlugin
