@@ -103,7 +103,15 @@ module.exports = (env) ->
 
       Request.get url, (error, response, body) =>
         if error
-          throw error
+          if error.code is "ENOTFOUND"
+            env.logger.warn "Cannot connect to :" + url
+            placeholder = "<div class=\"dvb\">Server not reachable at the moment.</div>"
+            @setSchedule(placeholder)
+          else
+            env.logger.error error
+
+          return
+
         data = JSON.parse(body)
 
         if data and data.Departures and data.Departures.length > 0
