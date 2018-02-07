@@ -112,7 +112,13 @@ module.exports = (env) ->
 
           return
 
-        data = JSON.parse(body)
+        try
+          data = JSON.parse(body)
+        catch err
+          env.logger.warn err
+          placeholder = "<div class=\"dvb\">Error on parsing server response.</div>"
+          @setSchedule(placeholder)
+          return
 
         if data and data.Departures and data.Departures.length > 0
           departures = data.Departures;
