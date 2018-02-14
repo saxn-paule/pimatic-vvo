@@ -3,37 +3,56 @@
 	width: 100%;
 }
 
-.col-1, .col-2, .col-3 {
- 	float:left;
- 	border-bottom: 3px solid white;
-	padding-left: 5px;
-	height: auto;
-}
-
-.col-1 {
-	width: 15%;
-}
-
-.col-2 {
-	width: 60%;
-	white-space: normal;
-}
-
-.col-3 {
-	width: 19%;
-}
-
-.caption, .stop {
+.dvb .caption, .dvb .stop {
 	padding: 5px 0 0 5px;
 	font-weight: 800;
 }
 
-.stop {
+.dvb .caption {
+	border-bottom: 3px solid white;
+}
+
+.dvb .stop {
 	font-size: 20px;
 	margin-bottom: 5px;
 	margin-top: 15px;
 }
 
+.dvb .col-1, .dvb .col-2, .dvb .col-3 {
+ 	float:left;
+	padding-left: 5px;
+	height: auto;
+}
+
+.dvb .caption.col-1, .dvb .caption.col-2, .dvb .caption.col-3 {
+	border-bottom: 3px solid #CCCCCC;
+}
+
+.dvb .row, .dvb .head {
+	padding-left: 5px;
+}
+
+.dvb .col-1 {
+	width: 15%;
+	border-bottom: 2px solid #CCCCCC;
+}
+
+.dvb .col-2 {
+	width: 60%;
+	white-space: normal;
+	border-bottom: 2px solid #CCCCCC;
+}
+
+.dvb .col-3 {
+	width: 19%;
+	border-bottom: 2px solid #CCCCCC;
+}
+
 .clear {
 	clear: both;
 }
+
+
+
+
+
