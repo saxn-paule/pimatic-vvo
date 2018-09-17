@@ -20,7 +20,7 @@
   },
   "configSchema": "vvo-config-schema.coffee",
   "dependencies": {
-    "request": "latest"
+    "request": "2.83.0"
   },
   "peerDependencies": {
     "pimatic": "0.9.*"

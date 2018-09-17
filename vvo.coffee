@@ -103,12 +103,10 @@ module.exports = (env) ->
 
       Request.get url, (error, response, body) =>
         if error
-          if error.code is "ENOTFOUND"
-            env.logger.warn "Cannot connect to :" + url
-            placeholder = "<div class=\"dvb\">Server not reachable at the moment.</div>"
-            @setSchedule(placeholder)
-          else
-            env.logger.error error
+          env.logger.warn "Cannot connect to :" + url
+          env.logger.error error.code
+          placeholder = "<div class=\"dvb\">Server not reachable at the moment.</div>"
+          @setSchedule(placeholder)
 
           return
 
@@ -149,26 +147,22 @@ module.exports = (env) ->
     constructor: (@framework) ->
 
     loadSchedule: () ->
-      env.logger.info "Melde gehorsamst: Ausführung!"
-      return "IT WORKS"
+      return "Done"
 
     executeAction: (simulate) =>
       if simulate
-        env.logger.info "Das ist nur eine Übung"
         return Promise.resolve(__("would log 42"))
       else
         @loadSchedule()
-        return Promise.resolve(__("Auftrag ausgeführt"))
+        return Promise.resolve(__("Done"))
 
 
   ####### ACTION PROVIDER #######
   class VvoActionProvider extends env.actions.ActionProvider
     constructor: (@framework)->
-      env.logger.info "VvoActionProvider meldet sich zum Dienst"
       return
 
     executeAction: (simulate) =>
-      env.logger.info "VvoActionProvider meldet gehorsamst: Ausführung!"
       return
 
     parseAction: (input, context) =>
