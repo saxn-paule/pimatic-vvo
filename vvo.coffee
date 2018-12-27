@@ -53,8 +53,6 @@ module.exports = (env) ->
         @reLoadSchedule()
       ), 30000
 
-      super()
-
     destroy: () ->
       if @timerId?
         clearInterval @timerId
