@@ -39,9 +39,9 @@ module.exports = (env) ->
         description: 'the schedule data'
         type: t.string
 
-    constructor: (@config, @plugin) ->
-      @id = @config.id
-      @name = @config.name
+    constructor: (config, plugin) ->
+      super(config.id, config.name)
+      @config = config
       @stopid = @config.stopid
       @amount = @config.amount or "5"
       @offset = @config.offset or "0"
