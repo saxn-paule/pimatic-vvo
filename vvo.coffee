@@ -144,7 +144,9 @@ module.exports = (env) ->
 
   ####### ACTION HANDLER ######
   class VvoActionHandler extends env.actions.ActionHandler
-    constructor: (@framework) ->
+    constructor: (framework) ->
+      super()
+      @framework = framework
 
     loadSchedule: () ->
       return "Done"
@@ -159,7 +161,9 @@ module.exports = (env) ->
 
   ####### ACTION PROVIDER #######
   class VvoActionProvider extends env.actions.ActionProvider
-    constructor: (@framework)->
+    constructor: (framework)->
+      super()
+      @framework = framework
       return
 
     executeAction: (simulate) =>
